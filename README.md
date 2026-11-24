@@ -1,3 +1,13 @@
+<!-- fork-notice:start -->
+
+> **About this fork:** maintained copy of [idurar/idurar-erp-crm](https://github.com/idurar/idurar-erp-crm), used for learning and integration. All credit for the original work goes to its authors. License: AGPL-3.0 (see `LICENSE`).
+>
+> **Live demo (upstream):** <https://cloud.idurarapp.com>
+>
+> [![Standard CI](https://github.com/ArAryan1314/idurar-erp-crm/actions/workflows/standard-ci.yml/badge.svg)](https://github.com/ArAryan1314/idurar-erp-crm/actions/workflows/standard-ci.yml)
+
+<!-- fork-notice:end -->
+
 <div align="center">
     <a href="https://www.idurarapp.com/">
   <img src="https://avatars.githubusercontent.com/u/50052356?s=200&v=4" width="128px" />

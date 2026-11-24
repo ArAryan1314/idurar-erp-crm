@@ -1,0 +1,64 @@
+name: Standard CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+  SKIP_ENV_VALIDATION: 1
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  node-backend:
+    name: Node (backend)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          package-manager-cache: false
+      - name: Install
+        run: npm ci || npm install
+      - name: Smoke test (package manifest valid)
+        run: npm pkg get name
+      - name: Dependency audit (report only)
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
+  node-frontend:
+    name: Node (frontend)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          package-manager-cache: false
+      - name: Install
+        run: npm ci || npm install
+      - name: Lint (report only)
+        continue-on-error: true
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Dependency audit (report only)
+        continue-on-error: true
+        run: npm audit --audit-level=high
